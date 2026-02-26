@@ -1,84 +1,40 @@
-# ARCHITECTURE.md
+# AI Agent Trading Bot Architecture for Automated BTC 5-Minute Strategy
 
-## 1. System Overview
+## Market Data Ingestion
+The bot will collect market data every 5 minutes to analyze BTC price movements. This will involve connecting to reliable data sources to ensure real-time accuracy.
 
-```mermaid
-flowchart TD
-    A[User] -->|Interacts with| B[Web Application]
-    B -->|Fetches Data| C[Market Data Service]
-    B -->|Sends Orders| D[Trading Engine]
-    D -->|Checks Risk| E[Risk Management]
-    E -->|Updates| F[Portfolio Management]
-    D -->|Executes Orders| G[Execution Service]
-    C -->|Provides Data| A
-    F -->|Displays Info| A
-```
+## Technical Indicators
+The following technical indicators will be utilized to assess market conditions:
+- Moving Averages (SMA and EMA)
+- Relative Strength Index (RSI)
+- Bollinger Bands
 
-## 2. Core Components
-- **Market Data Service**: Responsible for collecting and providing market data.
-- **Trading Engine**: Handles order processing, matching, and execution.
-- **Risk Management**: Monitors and manages trading risks.
-- **Portfolio Management**: Tracks user portfolios and manages positions.
-- **Execution Service**: Executes trades on the target platforms.
+## AI Decision Engine
+The AI decision engine will leverage machine learning models to predict BTC price movements, using historical data and technical indicators as inputs.
 
-## 3. Data Flow Diagram
+## Risk Management
+Risk management strategies will include:
+- Setting stop-loss and take-profit levels
+- Position sizing based on volatility and account equity
+- Employing diversification across trades
 
-- The system receives user inputs from the web application.
-- The Market Data Service gathers data and sends it to the Trading Engine.
-- Orders are processed and executed through the Execution Service.
+## Order Execution
+The bot will execute UP/DOWN trades on Polymarket based on its decision-making process, prioritizing speed and reliability.
 
-## 4. Deployment Architecture
-- **Docker**: Containerization for all services.
-- **Kubernetes**: Orchestrates the deployment and scaling of containerized applications.
-- **AWS Services**: Utilizes EC2 for compute, S3 for storage, and RDS for database management.
+## Polymarket API Integration
+Integration with the Polymarket API will allow the bot to place and manage orders directly through API calls, ensuring seamless operation.
 
-## 5. API Specifications
-- `GET /markets`: Retrieve market data.
-- `POST /orders`: Place a new order.
-- `GET /portfolio`: Retrieve user portfolio.
-- `GET /trades`: Retrieve trade history.
+## Database Schema
+The database will store trade details, market data, and historical performance metrics to analyze and improve algorithms. 
 
-## 6. Database Schema
-### Markets
-- `market_id`: Integer, primary key
-- `market_name`: String
-- `current_price`: Decimal
+## Technology Stack
+- Programming Language: Python
+- Libraries: pandas, NumPy, scikit-learn
+- Database: PostgreSQL
+- Hosting: AWS / Heroku
 
-### Positions
-- `position_id`: Integer, primary key
-- `user_id`: Integer
-- `market_id`: Integer
-- `quantity`: Decimal
+## Algorithm Parameters
+The bot’s trading algorithms will be parameterized for flexibility, allowing adjustments based on backtesting results.
 
-### Trades
-- `trade_id`: Integer, primary key
-- `user_id`: Integer
-- `market_id`: Integer
-- `trade_price`: Decimal
-- `trade_time`: Timestamp
-
-### Users
-- `user_id`: Integer, primary key
-- `username`: String
-- `password_hash`: String
-
-## 7. Security Architecture
-- **Authentication**: JWT tokens for user sessions.
-- **Encryption**: TLS for data in transit, AES for sensitive data at rest.
-- **Rate Limiting**: API rate limiting to prevent abuse.
-
-## 8. Scalability Patterns
-- **Caching**: Utilize Redis for caching market data.
-- **Message Queues**: RabbitMQ for async order processing.
-- **Load Balancing**: Distribute incoming traffic across multiple instances.
-
-## 9. Monitoring and Logging Architecture
-- Implement logging for all services using ELK stack (Elasticsearch, Logstash, Kibana).
-- Monitor system health and performance with Prometheus and Grafana.
-
-## 10. Technology Stack Recommendations
-- **Frontend**: React.js for the user interface.
-- **Backend**: Node.js with Express.
-- **Database**: PostgreSQL for relational data.
-- **Containerization**: Docker for development environments.
-- **Orchestration**: Kubernetes for deployment and scaling.
+## Deployment Architecture
+The bot will be deployed using Docker containers to ensure consistency across environments, with monitoring tools to track performance and errors.
